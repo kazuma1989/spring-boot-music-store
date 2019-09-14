@@ -11,7 +11,7 @@ spring:
 
   # 開発環境の DB 接続情報
   datasource:
-    url: jdbc:h2:mem:sbms
+    url: jdbc:h2:file:./h2-data/dev
     username: sa
     password:
 
@@ -28,6 +28,6 @@ server:
       enabled: true
 
 logging:
-  file: ./sbms.log
+  file: ./application.log
   level:
-    com.github.kazuma1989.sbms: TRACE
+    com.github.kazuma1989: TRACE

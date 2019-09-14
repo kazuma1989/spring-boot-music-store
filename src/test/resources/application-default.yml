@@ -1,5 +1,8 @@
 # ユニットテスト時のみ使われる設定ファイル
 
 spring:
-  profiles:
-    active: dev
+  # 開発環境の DB 接続情報
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:

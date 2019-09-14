@@ -1,6 +1,5 @@
 /.gradle/
 /.idea/
-/.vscode/
 /bin/
 /build/
 
@@ -14,3 +13,9 @@
 !/.settings/org.eclipse.jdt.core.prefs
 /.classpath
 /.project
+
+/.vscode/*
+!/.vscode/launch.json
+
+# H2 database
+/h2-data/

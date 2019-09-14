@@ -27,6 +27,8 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-jdbc'
     // DB が H2 なので必要
     runtime 'com.h2database:h2'
+    // H2 DB の初期化スクリプトをバージョン管理するのに必要
+    runtime 'org.flywaydb:flyway-core'
 
     // AOP するために必要（ロギングに便利）
     compile 'org.springframework.boot:spring-boot-starter-aop'

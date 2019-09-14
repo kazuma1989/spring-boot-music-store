@@ -1,0 +1,12 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - Application",
+      "request": "launch",
+      "mainClass": "com.github.kazuma1989.sbms.Application",
+      "projectName": "spring-boot-music-store",
+      "args": "--spring.profiles.active=dev"
+    }
+  ]
+}
