@@ -1,0 +1,23 @@
+# 常に使われる設定ファイル。
+# 環境に依存しない（アプリ設計として固定の）設定値を記載する。
+
+spring:
+  # 環境に依存しない DB 設定
+  datasource:
+    driver-classname: org.postgresql.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        # https://stackoverflow.com/a/56256349/8662861
+        jdbc.lob.non_contextual_creation: true
+
+server:
+  servlet:
+    context-path: /music
+
+  error:
+    whitelabel:
+      # Spring Boot デフォルトのエラーページを使わず、error.html を使うようにする
+      # https://www.baeldung.com/spring-boot-custom-error-page
+      enabled: false

@@ -1,0 +1,28 @@
+# --spring.profiles.active=dev を指定すると使われる設定ファイル
+# ローカル開発限定の設定を記載する。
+
+spring:
+  # Templates and static resources reloading during development
+  # https://attacomsian.com/blog/spring-boot-auto-reload-thymeleaf-templates#method-2-change-thymeleaf-templates-path
+  thymeleaf:
+    prefix: file:src/main/resources/templates/
+  resources:
+    static-locations: file:src/main/resources/static/
+
+  # 開発環境の DB 接続情報
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sbms
+    username: sbms
+    password: sbms
+
+server:
+  port: ${PORT:8082}
+
+  error:
+    whitelabel:
+      enabled: true
+
+logging:
+  file: ./sbms.log
+  level:
+    com.github.kazuma1989.sbms: TRACE

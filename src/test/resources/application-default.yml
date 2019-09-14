@@ -1,0 +1,5 @@
+# ユニットテスト時のみ使われる設定ファイル
+
+spring:
+  profiles:
+    active: dev
