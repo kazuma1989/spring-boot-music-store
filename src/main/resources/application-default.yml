@@ -6,7 +6,7 @@ spring:
   # 環境変数かアプリ起動時の引数で接続情報を指定する。
   # https://docs.spring.io/spring-boot/docs/2.1.6.RELEASE/reference/htmlsingle/#howto-use-short-command-line-arguments
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/exampledb}
+    url: ${DB_URL:jdbc:h2:tcp://localhost:5432/exampledb}
     username: ${DB_USER:exampleuser}
     password: ${DB_PASS:examplepass}
 

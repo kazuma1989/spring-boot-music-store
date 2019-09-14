@@ -25,8 +25,8 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     // JDBC で DAO を実装するために必要
     compile 'org.springframework.boot:spring-boot-starter-jdbc'
-    // DB が PostgreSQL なので必要
-    runtime 'org.postgresql:postgresql'
+    // DB が H2 なので必要
+    runtime 'com.h2database:h2'
 
     // AOP するために必要（ロギングに便利）
     compile 'org.springframework.boot:spring-boot-starter-aop'

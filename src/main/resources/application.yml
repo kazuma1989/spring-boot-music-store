@@ -4,7 +4,7 @@
 spring:
   # 環境に依存しない DB 設定
   datasource:
-    driver-classname: org.postgresql.Driver
+    driver-classname: org.h2.Driver
 
   jpa:
     properties:
