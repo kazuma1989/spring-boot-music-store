@@ -1,0 +1,16 @@
+/.gradle/
+/.idea/
+/.vscode/
+/bin/
+/build/
+
+*.log
+*.log.*
+
+# Eclipse の設定ファイルは無視する。
+# ./gradlew eclipse コマンドで生成できるため。
+# フォーマッター設定はバージョン管理して共有する
+/.settings/*
+!/.settings/org.eclipse.jdt.core.prefs
+/.classpath
+/.project
