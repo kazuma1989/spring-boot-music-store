@@ -1,10 +1,8 @@
 plugins {
-    id 'war'
+    id 'java'
     id 'org.springframework.boot' version '2.1.8.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'jacoco'
-    id 'eclipse'
-    id 'idea'
 }
 
 repositories {
@@ -16,59 +14,36 @@ targetCompatibility = JavaVersion.VERSION_12
 
 dependencies {
     // Spring の Web アプリには大体必要
-    compile 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
     // Thymeleaf テンプレートで画面を実装するために必要
-    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
     // Transactional アノテーションを使うのに必要
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-    // JDBC で DAO を実装するために必要
-    compile 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // JDBC で Repository を実装するために必要
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     // DB が H2 なので必要
-    runtime 'com.h2database:h2'
+    runtimeOnly 'com.h2database:h2'
     // H2 DB の初期化スクリプトをバージョン管理するのに必要
-    runtime 'org.flywaydb:flyway-core'
+    runtimeOnly 'org.flywaydb:flyway-core'
 
     // AOP するために必要（ロギングに便利）
-    compile 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
 
     // ソース変更を検知してアプリを再起動してくれる
-    runtime 'org.springframework.boot:spring-boot-devtools'
-
-    // デプロイ可能な WAR を作るために必要
-    // https://docs.spring.io/spring-boot/docs/2.1.6.RELEASE/reference/htmlsingle/#howto-create-a-deployable-war-file
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
 
     // Autowired しながらテストするのに必要
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // これがないと Javadoc 生成が失敗する
     // https://stackoverflow.com/a/28755606/8662861
     compileOnly 'javax.interceptor:javax.interceptor-api:1.+'
 }
 
-eclipse {
-    // Eclipse に src/test を優先させる。
-    // ./gradlew test でテストしたときと Eclipse からテストしたときで読み込むリソースが変わってしまうのを防ぐため。
-    classpath.file {
-        whenMerged { classpath ->
-            def isTest = { it.kind == 'src' && it.entryAttributes['gradle_scope'] == 'test' }
-            def testSrc = classpath.entries.findAll(isTest)
-            classpath.entries.removeAll(isTest)
-
-            testSrc.each { classpath.entries.add(0, it) }
-        }
-    }
-}
-
-tasks.eclipse {
-    description = 'Eclipse の設定ファイル一式を生成し、インポート可能なプロジェクトにします。'
-    dependsOn cleanEclipse
-}
-
 tasks.test {
-    description = "ユニットテストを実行します。対象を絞る場合は --tests '*Business*.add*' のようにフィルタリングできます。"
+    description = "ユニットテストを実行します。対象を絞る場合は --tests '*Service*.add*' のようにフィルタリングできます。"
 
     testLogging {
         events 'SKIPPED', 'PASSED', 'FAILED'
@@ -97,69 +72,15 @@ tasks.bootRun {
     args = ['--spring.profiles.active=dev']
 }
 
-tasks.bootWar {
-    description = 'デプロイ用の WAR を生成します。'
-
-    // WAR 名を固定したいときはこう
-    // archiveFileName = 'music-store.war'
-}
-
-task bootWarRun {
+task bootJarRun {
     description = '本番向け資材として WAR をビルドし、その WAR からアプリを起動します。'
     group = tasks.bootRun.group
-    dependsOn bootWar
+    dependsOn bootJar
 
     doLast {
         javaexec {
             main = '-jar'
-            args = [tasks.bootWar.archiveFile.get()]
+            args = [tasks.bootJar.archiveFile.get()]
         }
-    }
-}
-
-task deploy {
-    description = '本番向け資材として WAR をビルドし、Tomcat へデプロイ（配備）します。'
-    group = 'Deploy'
-    dependsOn bootWar
-
-    ext {
-        api = "http://localhost:${System.env.PORT ?: 8081}/manager/text/deploy"
-        contextRoot = "/${project.name}"
-        userpass = System.env.USERPASS ?: 'admin:admin'
-    }
-
-    doLast {
-        def http = new URL("${api}?path=${contextRoot}&update=true").openConnection()
-        http.setRequestMethod('PUT')
-        http.setDoOutput(true)
-        http.setRequestProperty('Authorization', 'Basic ' + new String(Base64.encoder.encode(userpass.bytes)));
-
-        tasks.bootWar.archiveFile.get().asFile.withInputStream { input ->
-            http.outputStream << input
-        }
-
-        println "${http.responseCode} ${http.responseMessage}"
-        System.out << http.inputStream
-    }
-}
-
-task undeploy {
-    description = 'Tomcat からアプリケーションをアンデプロイ（配備解除）します。'
-    group = 'Deploy'
-
-    ext {
-        api = "http://localhost:${System.env.PORT ?: 8081}/manager/text/undeploy"
-        contextRoot = "/${project.name}"
-        userpass = System.env.USERPASS ?: 'admin:admin'
-    }
-
-    doLast {
-        def http = new URL("${api}?path=${contextRoot}").openConnection()
-        http.setRequestMethod('GET')
-        http.setDoOutput(false)
-        http.setRequestProperty('Authorization', 'Basic ' + new String(Base64.encoder.encode(userpass.bytes)));
-
-        println "${http.responseCode} ${http.responseMessage}"
-        System.out << http.inputStream
     }
 }
