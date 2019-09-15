@@ -1,5 +1,5 @@
 
-package com.github.kazuma1989.sbms.cart.controller;
+package com.github.kazuma1989.sbms.cart;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;

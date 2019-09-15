@@ -1,5 +1,5 @@
 
-package com.github.kazuma1989.sbms.index.repository;
+package com.github.kazuma1989.sbms.repository;
 
 import java.util.List;
 
@@ -18,18 +18,18 @@ public class ItemRepository {
         return jdbc
             .query(
                 "SELECT"
-                    + " item.id"
-                    + ",item.title"
-                    + ",album.title as album_title"
-                    + ",album.jacket_img as jacket_img"
-                    + ",artist.title as artist_title"
-                    + ",genre.title as genre_title"
-                    + ",item.price"
-                    + ",item.release_date"
+                    + "   item.id"
+                    + "  ,item.title"
+                    + "  ,album.title as album_title"
+                    + "  ,album.jacket_img as jacket_img"
+                    + "  ,artist.title as artist_title"
+                    + "  ,genre.title as genre_title"
+                    + "  ,item.price"
+                    + "  ,item.release_date"
                     + " FROM item"
-                    + " INNER JOIN album ON item.album_id = album.id"
-                    + " INNER JOIN artist ON item.artist_id = artist.id"
-                    + " INNER JOIN genre ON item.genre_id = genre.id"
+                    + "   INNER JOIN album ON item.album_id = album.id"
+                    + "   INNER JOIN artist ON item.artist_id = artist.id"
+                    + "   INNER JOIN genre ON item.genre_id = genre.id"
                     + " WHERE item.release_date <= CURRENT_DATE"
                     + " ORDER BY item.release_date DESC, item.id ASC"
                     + " LIMIT :limit OFFSET 0",

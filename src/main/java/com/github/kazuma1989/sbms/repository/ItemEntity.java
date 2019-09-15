@@ -1,5 +1,5 @@
 
-package com.github.kazuma1989.sbms.index.repository;
+package com.github.kazuma1989.sbms.repository;
 
 import java.util.Date;
 

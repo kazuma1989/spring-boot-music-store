@@ -1,11 +1,11 @@
 
-package com.github.kazuma1989.sbms.index.service;
+package com.github.kazuma1989.sbms.index;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
-import com.github.kazuma1989.sbms.index.repository.ItemEntity;
-import com.github.kazuma1989.sbms.index.repository.ItemRepository;
+import com.github.kazuma1989.sbms.repository.ItemEntity;
+import com.github.kazuma1989.sbms.repository.ItemRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

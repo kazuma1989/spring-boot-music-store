@@ -1,7 +1,5 @@
 
-package com.github.kazuma1989.sbms.index.controller;
-
-import com.github.kazuma1989.sbms.index.service.IndexService;
+package com.github.kazuma1989.sbms.index;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
