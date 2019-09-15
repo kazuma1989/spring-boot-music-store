@@ -8,12 +8,32 @@
     <section class="section">
       <div class="container">
         <h1 class="title is-size-4 has-text-weight-light">
-          トップページ
+          新着商品
         </h1>
 
-        <div class="message is-info">
-          <div class="message-body">
-            トップページです
+        <div class="columns is-multiline">
+          <div class="column is-one-third" th:each="item : ${items}">
+            <div class="card">
+              <a
+                class="card-image"
+                th:href="@{/item/detail/{id}(id=${item.id})}"
+              >
+                <figure class="image is-square">
+                  <img th:src="@{${item.jacketFile}}" />
+                </figure>
+              </a>
+
+              <div class="card-content">
+                <p class="title is-4">
+                  <a th:href="@{/item/detail/{id}(id=${item.id})}">
+                    [[${item.title}]]
+                  </a>
+                </p>
+                <p class="subtitle is-6">
+                  [[${item.artistTitle}]] ([[${item.genreTitle}]])
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

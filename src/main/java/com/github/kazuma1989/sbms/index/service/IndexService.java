@@ -2,8 +2,10 @@
 package com.github.kazuma1989.sbms.index.service;
 
 import java.lang.invoke.MethodHandles;
+import java.util.List;
 
-import com.github.kazuma1989.sbms.index.repository.IndexRepository;
+import com.github.kazuma1989.sbms.index.repository.ItemEntity;
+import com.github.kazuma1989.sbms.index.repository.ItemRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +20,9 @@ public class IndexService {
     static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Autowired
-    IndexRepository repo;
+    ItemRepository repo;
 
-    public void testAccess() {
-        logger.debug(String.valueOf(repo.testAccess()));
+    public List<ItemEntity> findNewItems() {
+        return repo.findNewItems();
     }
 }
