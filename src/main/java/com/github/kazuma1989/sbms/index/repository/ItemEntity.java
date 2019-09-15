@@ -11,6 +11,8 @@ public class ItemEntity {
 
     public String albumTitle;
 
+    public String jacketImg;
+
     public String artistTitle;
 
     public String genreTitle;
@@ -18,6 +20,4 @@ public class ItemEntity {
     public Integer price;
 
     public Date releaseDate;
-
-    public String jacketFile;
 }

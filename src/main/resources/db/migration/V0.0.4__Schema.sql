@@ -8,12 +8,12 @@ CREATE TABLE ITEM (
     GENRE_ID        CHAR(8),
     PRICE           INT,
     RELEASE_DATE    DATE,
-    JACKET_FILE     VARCHAR(256),
 );
 
 CREATE TABLE ALBUM (
-    ID      INT PRIMARY KEY,
-    TITLE   VARCHAR(250) NOT NULL,
+    ID          INT PRIMARY KEY,
+    TITLE       VARCHAR(250) NOT NULL,
+    JACKET_IMG  VARCHAR(256),
 );
 
 CREATE TABLE ARTIST (
@@ -56,17 +56,23 @@ CREATE TABLE PREFECTURE (
 
 -- data
 
-INSERT INTO ITEM (ID, TITLE, ALBUM_ID, ARTIST_ID, GENRE_ID, PRICE, RELEASE_DATE, JACKET_FILE) VALUES
-(1, 'title 1', 1, 1, 1, 300, TO_DATE('2019/01/01', 'YYYY/MM/DD'), 'image/jacket-1.jpg'),
-(2, 'title 2', 2, 2, 2, 500, TO_DATE('2019/02/01', 'YYYY/MM/DD'), 'image/jacket-2.jpg');
+INSERT INTO ITEM (ID, TITLE, ALBUM_ID, ARTIST_ID, GENRE_ID, PRICE, RELEASE_DATE) VALUES
+(1, 'Title 1', 1, 1, 1, 300, TO_DATE('2019/01/01', 'YYYY/MM/DD')),
+(2, 'Title 2', 2, 2, 1, 300, TO_DATE('2021/12/31', 'YYYY/MM/DD')),
+(3, 'Title 3', 2, 2, 1, 300, TO_DATE('2019/01/01', 'YYYY/MM/DD')),
+(4, 'Title 4', 1, 1, 2, 400, TO_DATE('2019/01/01', 'YYYY/MM/DD')),
+(5, 'Title 5', 2, 2, 2, 300, TO_DATE('2019/02/01', 'YYYY/MM/DD')),
+(6, 'Title 6', 1, 1, 3, 200, TO_DATE('2019/03/01', 'YYYY/MM/DD')),
+(7, 'Title 7', 2, 2, 3, 300, TO_DATE('2019/03/01', 'YYYY/MM/DD')),
+(8, 'Title 8', 1, 1, 1, 500, TO_DATE('2019/02/01', 'YYYY/MM/DD'));
 
-INSERT INTO ALBUM (ID, TITLE) VALUES
-(1, 'album 1'),
-(2, 'album 2');
+INSERT INTO ALBUM (ID, TITLE, JACKET_IMG) VALUES
+(1, 'Album 1', '/image/album_1.jpg'),
+(2, 'Album 2', '/image/album_2.jpg');
 
 INSERT INTO ARTIST (ID, TITLE) VALUES
-(1, 'artist 1'),
-(2, 'artist 2');
+(1, 'Artist 1'),
+(2, 'Artist 2');
 
 INSERT INTO GENRE (ID, TITLE) VALUES
 (1, 'POP'),
