@@ -1,0 +1,116 @@
+<nav class="navbar is-dark">
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item" th:href="@{/}" title="トップページを表示する">
+        <img
+          th:src="@{/image/logo-white.png}"
+          alt="SB music: the music store"
+        />
+      </a>
+
+      <div style="flex-grow: 1"></div>
+
+      <a
+        class="navbar-item is-hidden-desktop"
+        th:href="@{/cancel/}"
+        title="注文をキャンセルする"
+      >
+        <span class="icon is-medium">
+          <i class="fas fa-lg fa-trash-alt"></i>
+        </span>
+      </a>
+
+      <a
+        class="navbar-item is-hidden-desktop"
+        th:href="@{/cart/}"
+        title="ショッピングカートを表示する"
+      >
+        <span class="icon is-medium">
+          <i class="fas fa-lg fa-shopping-cart"></i>
+        </span>
+        <span
+          class="tag is-rounded has-text-weight-bold"
+          th:if="${@cartSession.cartCount ge 0}"
+        >
+          [[${@cartSession.cartCount}]]
+        </span>
+      </a>
+    </div>
+
+    <div
+      class="navbar-menu is-active is-paddingless"
+      style="background-color: transparent"
+    >
+      <div class="navbar-start">
+        <div class="navbar-item">
+          <form th:action="@{/goods/search}" method="GET">
+            <div class="field has-addons">
+              <!--/*
+              <div class="control">
+                <div class="select is-rounded">
+                  <select name="target" title="検索対象を選ぶ">
+                    <option
+                      th:each="target : ${@menuCache.targetList}"
+                      th:value="${target.targetCode}"
+                      th:selected="${target.targetCode == '1'}"
+                    >
+                      [[${target.targetName}]]
+                    </option>
+                  </select>
+                </div>
+              </div>
+              */-->
+              <div class="control is-expanded">
+                <input
+                  name="keyword"
+                  class="input is-rounded"
+                  type="search"
+                  title="検索キーワードを入力する"
+                />
+              </div>
+              <div class="control">
+                <button
+                  type="submit"
+                  class="button is-rounded"
+                  title="商品を検索する"
+                >
+                  <span class="icon is-small">
+                    <i class="fas fa-search"></i>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="navbar-end">
+        <a
+          class="navbar-item is-hidden-touch"
+          th:href="@{/cancel/}"
+          title="注文をキャンセルする"
+        >
+          <span class="icon is-medium">
+            <i class="fas fa-lg fa-trash-alt"></i>
+          </span>
+        </a>
+
+        <a
+          class="navbar-item is-hidden-touch"
+          th:href="@{/cart/}"
+          title="ショッピングカートを表示する"
+        >
+          <span class="icon is-medium">
+            <i class="fas fa-lg fa-shopping-cart"></i>
+          </span>
+          <span
+            class="tag is-rounded has-text-weight-bold"
+            th:if="${@cartSession.cartCount ge 0}"
+          >
+            [[${@cartSession.cartCount}]]
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

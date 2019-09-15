@@ -1,0 +1,28 @@
+<section class="hero is-dark">
+  <style>
+    .hero.is-dark {
+      background-repeat: no-repeat;
+      background-position: left center;
+      background-color: #ff92b2;
+      background-image: url([[@{/image/hero-E--AUpYXbjM.jpg}]]);
+      background-size: 400px 400px;
+    }
+    .hero-body {
+      background-image: linear-gradient(60deg, rgba(0, 0, 0, 0.7), transparent);
+    }
+  </style>
+
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title">the music store</h1>
+      <p class="subtitle">Web 最大級の音楽サイトへようこそ</p>
+
+      <a class="button is-white" th:href="@{/item/search-input}">
+        <span>お気に入りを見つける</span>
+        <span class="icon">
+          <i class="fas fa-arrow-circle-right"></i>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
