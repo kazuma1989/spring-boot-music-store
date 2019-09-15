@@ -24,8 +24,8 @@ public class ApplicationTest {
 
     @Test
     public void DBアクセスできる() {
-        int count = jdbc.query("SELECT COUNT(*) FROM billionaires", (rs, rowNum) -> rs.getInt(1)).get(0);
+        int count = jdbc.query("SELECT COUNT(*) FROM PREFECTURE", (rs, rowNum) -> rs.getInt(1)).get(0);
 
-        assertThat(count, is(3));
+        assertThat(count, is(47));
     }
 }

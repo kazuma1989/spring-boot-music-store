@@ -12,6 +12,6 @@ public class IndexRepository {
     NamedParameterJdbcTemplate jdbc;
 
     public int testAccess() {
-        return jdbc.query("SELECT COUNT(*) FROM billionaires", (rs, rowNum) -> rs.getInt(1)).get(0);
+        return jdbc.query("SELECT COUNT(*) FROM PREFECTURE", (rs, rowNum) -> rs.getInt(1)).get(0);
     }
 }
