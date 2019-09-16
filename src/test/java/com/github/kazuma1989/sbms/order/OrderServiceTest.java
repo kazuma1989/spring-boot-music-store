@@ -40,7 +40,7 @@ public class OrderServiceTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void findById_IDが数字でないときはEmpty回答() throws Exception {
+    public void order_DBに書き込める() throws Exception {
         service.order(supply(() -> {
             OrderEntity e = new OrderEntity();
             e.setTotalPrice(BigDecimal.valueOf(1000));
