@@ -23,22 +23,23 @@ public class CartService {
             return Optional.empty();
         }
 
-        Optional<CartItemVO> cartItem = session.cartList
+        Optional<CartItemVO> cartItem = session
+            .getCartList()
             .stream()
-            .filter(c -> c.item.id.toString().equals(id))
+            .filter(c -> c.getItem().getId().toString().equals(id))
             .findFirst();
         if (cartItem.isPresent()) {
             CartItemVO v = cartItem.get();
-            v.amount += 1;
+            v.setAmount(v.getAmount() + 1);
 
             return Optional.of(v);
         }
         else {
             CartItemVO v = new CartItemVO();
-            v.item = item.get();
-            v.amount = 1;
+            v.setItem(item.get());
+            v.setAmount(1);
 
-            session.cartList.add(v);
+            session.getCartList().add(v);
             return Optional.of(v);
         }
     }

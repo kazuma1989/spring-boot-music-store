@@ -28,6 +28,10 @@ dependencies {
     // H2 DB の初期化スクリプトをバージョン管理するのに必要
     runtimeOnly 'org.flywaydb:flyway-core'
 
+    // Value Object を簡単に作るために必要
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
     // AOP するために必要（ロギングに便利）
     implementation 'org.springframework.boot:spring-boot-starter-aop'
 

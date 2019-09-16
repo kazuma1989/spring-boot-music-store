@@ -75,14 +75,14 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     private static ItemEntity rowMapper(ResultSet rs, int rowNum) throws SQLException {
         ItemEntity e = new ItemEntity();
-        e.id = rs.getInt("id");
-        e.title = rs.getString("title");
-        e.albumTitle = rs.getString("album_title");
-        e.jacketImg = rs.getString("jacket_img");
-        e.artistTitle = rs.getString("artist_title");
-        e.genreTitle = rs.getString("genre_title");
-        e.price = rs.getInt("price");
-        e.releaseDate = rs.getDate("release_date");
+        e.setId(rs.getInt("id"));
+        e.setTitle(rs.getString("title"));
+        e.setAlbumTitle(rs.getString("album_title"));
+        e.setJacketImg(rs.getString("jacket_img"));
+        e.setArtistTitle(rs.getString("artist_title"));
+        e.setGenreTitle(rs.getString("genre_title"));
+        e.setPrice(rs.getInt("price"));
+        e.setReleaseDate(rs.getDate("release_date"));
         return e;
     }
 }

@@ -44,29 +44,29 @@ public class CartServiceTest {
 
         service.addTo(cartSession, itemId);
 
-        assertThat(cartSession.cartList, hasSize(1));
-        assertThat(cartSession.cartList.get(0).amount, is(1));
+        assertThat(cartSession.getCartList(), hasSize(1));
+        assertThat(cartSession.getCartList().get(0).getAmount(), is(1));
     }
 
     @Test
     public void addTo_カートに追加できる_すでにある物を増やす() throws Exception {
         CartSession cartSession = new CartSession();
-        cartSession.cartList.add(supply(() -> {
+        cartSession.getCartList().add(supply(() -> {
             CartItemVO v = new CartItemVO();
-            v.amount = 2;
-            v.item = supply(() -> {
+            v.setAmount(2);
+            v.setItem(supply(() -> {
                 ItemEntity item = new ItemEntity();
-                item.id = 1;
+                item.setId(1);
                 return item;
-            });
+            }));
             return v;
         }));
         String itemId = "1";
 
         service.addTo(cartSession, itemId);
 
-        assertThat(cartSession.cartList, hasSize(1));
-        assertThat(cartSession.cartList.get(0).amount, is(3));
+        assertThat(cartSession.getCartList(), hasSize(1));
+        assertThat(cartSession.getCartList().get(0).getAmount(), is(3));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class CartServiceTest {
         String itemId = "not exist";
 
         assertThat(service.addTo(cartSession, itemId), is(Optional.empty()));
-        assertThat(cartSession.cartList, hasSize(0));
+        assertThat(cartSession.getCartList(), hasSize(0));
     }
 
     static <T> T supply(Supplier<T> supplier) {

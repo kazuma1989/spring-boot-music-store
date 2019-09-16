@@ -3,21 +3,24 @@ package com.github.kazuma1989.sbms.repository;
 
 import java.util.Date;
 
+import lombok.Data;
+
+@Data
 public class ItemEntity {
 
-    public Integer id;
+    private Integer id;
 
-    public String title;
+    private String title;
 
-    public String albumTitle;
+    private String albumTitle;
 
-    public String jacketImg;
+    private String jacketImg;
 
-    public String artistTitle;
+    private String artistTitle;
 
-    public String genreTitle;
+    private String genreTitle;
 
-    public Integer price;
+    private Integer price;
 
-    public Date releaseDate;
+    private Date releaseDate;
 }

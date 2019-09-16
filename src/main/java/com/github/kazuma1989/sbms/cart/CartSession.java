@@ -7,9 +7,14 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @SessionScope
 @Component("cartSession")
 public class CartSession {
 
-    public List<CartItemVO> cartList = new ArrayList<>();
+    @Getter
+    @Setter
+    private List<CartItemVO> cartList = new ArrayList<>();
 }
