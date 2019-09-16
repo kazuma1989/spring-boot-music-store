@@ -23,11 +23,6 @@ public class ItemService {
     }
 
     public Optional<ItemEntity> findById(String id) {
-        try {
-            return repo.findById(Integer.parseInt(id));
-        }
-        catch (NumberFormatException e) {
-            return Optional.empty();
-        }
+        return repo.findById(id);
     }
 }

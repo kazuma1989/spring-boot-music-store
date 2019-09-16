@@ -1,6 +1,8 @@
 
 package com.github.kazuma1989.sbms.cart;
 
+import java.util.Optional;
+
 import com.github.kazuma1989.sbms.repository.ItemEntity;
 import com.github.kazuma1989.sbms.repository.ItemRepository;
 
@@ -15,7 +17,29 @@ public class CartService {
     @Autowired
     ItemRepository repo;
 
-    public void addTo(CartSession session, String id) {
-        // TODO impl
+    public Optional<CartItemVO> addTo(CartSession session, String id) {
+        Optional<ItemEntity> item = repo.findById(id);
+        if (item.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Optional<CartItemVO> cartItem = session.cartList
+            .stream()
+            .filter(c -> c.item.id.toString().equals(id))
+            .findFirst();
+        if (cartItem.isPresent()) {
+            CartItemVO v = cartItem.get();
+            v.amount += 1;
+
+            return Optional.of(v);
+        }
+        else {
+            CartItemVO v = new CartItemVO();
+            v.item = item.get();
+            v.amount = 1;
+
+            session.cartList.add(v);
+            return Optional.of(v);
+        }
     }
 }

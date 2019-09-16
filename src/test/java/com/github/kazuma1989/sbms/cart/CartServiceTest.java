@@ -4,6 +4,11 @@ package com.github.kazuma1989.sbms.cart;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
+import java.util.Optional;
+import java.util.function.Supplier;
+
+import com.github.kazuma1989.sbms.repository.ItemEntity;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -36,8 +41,44 @@ public class CartServiceTest {
     public void addTo_カートに追加できる() throws Exception {
         CartSession cartSession = new CartSession();
         String itemId = "1";
+
         service.addTo(cartSession, itemId);
 
         assertThat(cartSession.cartList, hasSize(1));
+        assertThat(cartSession.cartList.get(0).amount, is(1));
+    }
+
+    @Test
+    public void addTo_カートに追加できる_すでにある物を増やす() throws Exception {
+        CartSession cartSession = new CartSession();
+        cartSession.cartList.add(supply(() -> {
+            CartItemVO v = new CartItemVO();
+            v.amount = 2;
+            v.item = supply(() -> {
+                ItemEntity item = new ItemEntity();
+                item.id = 1;
+                return item;
+            });
+            return v;
+        }));
+        String itemId = "1";
+
+        service.addTo(cartSession, itemId);
+
+        assertThat(cartSession.cartList, hasSize(1));
+        assertThat(cartSession.cartList.get(0).amount, is(3));
+    }
+
+    @Test
+    public void addTo_存在しない商品のときはEmptyを返す() throws Exception {
+        CartSession cartSession = new CartSession();
+        String itemId = "not exist";
+
+        assertThat(service.addTo(cartSession, itemId), is(Optional.empty()));
+        assertThat(cartSession.cartList, hasSize(0));
+    }
+
+    static <T> T supply(Supplier<T> supplier) {
+        return supplier.get();
     }
 }

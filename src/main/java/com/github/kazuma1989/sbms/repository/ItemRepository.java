@@ -8,5 +8,5 @@ public interface ItemRepository {
 
     public List<ItemEntity> findNewItems();
 
-    public Optional<ItemEntity> findById(int id);
+    public Optional<ItemEntity> findById(String id);
 }

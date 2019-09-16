@@ -37,14 +37,20 @@ public class ItemRepositoryImpl implements ItemRepository {
                     + " WHERE item.release_date <= CURRENT_DATE"
                     + " ORDER BY item.release_date DESC, item.id ASC"
                     + " LIMIT :limit OFFSET 0",
-
                 new MapSqlParameterSource().addValue("limit", 6),
-
                 ItemRepositoryImpl::rowMapper);
     }
 
     @Override
-    public Optional<ItemEntity> findById(int id) {
+    public Optional<ItemEntity> findById(String id) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        try {
+            params.addValue("id", Integer.parseInt(id));
+        }
+        catch (NumberFormatException e) {
+            return Optional.empty();
+        }
+
         return jdbc
             .query(
                 "SELECT"
@@ -61,9 +67,7 @@ public class ItemRepositoryImpl implements ItemRepository {
                     + "   INNER JOIN artist ON item.artist_id = artist.id"
                     + "   INNER JOIN genre ON item.genre_id = genre.id"
                     + " WHERE item.id = :id",
-
-                new MapSqlParameterSource().addValue("id", id),
-
+                params,
                 ItemRepositoryImpl::rowMapper)
             .stream()
             .findFirst();

@@ -25,12 +25,11 @@ public class ItemController {
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable String id, Model model) {
         Optional<ItemEntity> item = service.findById(id);
-        if (!item.isPresent()) {
+        if (item.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
 
         model.addAttribute("item", item.get());
-
         return "item-detail";
     }
 }
