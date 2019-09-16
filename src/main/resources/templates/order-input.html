@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+  <head>
+    <th:block th:insert="fragment/head"></th:block>
+  </head>
+
+  <body>
+    <th:block th:insert="fragment/menu"></th:block>
+
+    <section class="section">
+      <div class="container">
+        <h1 class="title is-size-4 has-text-weight-light">
+          注文手続き
+        </h1>
+
+        <!--/* <th:block th:insert="fragment/errorMessage"></th:block> */-->
+
+        <form class="columns" method="POST" th:action="@{/order/input}">
+          <div class="column is-one-third">
+            <div class="card">
+              <div class="card-content">
+                <table class="table is-narrow is-fullwidth">
+                  <tbody class="is-size-7">
+                    <tr>
+                      <th style="border: none">商品の合計（税込）</th>
+                      <td class="has-text-right" style="border: none">
+                        ¥ [[${#numbers.formatDecimal(totalPrice, 3, 'COMMA', 0,
+                        'POINT')}]]
+                      </td>
+                    </tr>
+                  </tbody>
+
+                  <tfoot>
+                    <tr>
+                      <th class="has-text-danger">請求金額（税込）</th>
+                      <td
+                        class="has-text-right has-text-danger has-text-weight-bold"
+                      >
+                        ¥ [[${#numbers.formatDecimal(totalPrice, 3, 'COMMA', 0,
+                        'POINT')}]]
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+
+                <button
+                  class="button is-fullwidth is-primary"
+                  disabled
+                  type="button"
+                >
+                  確定
+                </button>
+                <p class="help">
+                  注文者の情報を入力してください
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <div class="label">宛名</div>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input
+                      type="text"
+                      name="cardName"
+                      class="input"
+                      th:value="${''}"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">カード番号</label>
+              </div>
+              <div class="field-body">
+                <div class="field has-addons">
+                  <div class="control is-expanded">
+                    <input
+                      type="text"
+                      name="cardNumber"
+                      class="input"
+                      th:value="${''}"
+                      placeholder="例: 1234123412341234"
+                    />
+                  </div>
+                  <div class="control">
+                    <div class="select">
+                      <select name="expiringMonth">
+                        <option value="">月</option>
+                        <option
+                          th:each="i : ${#numbers.sequence(1, 12)}"
+                          th:with="month = ${#numbers.formatInteger(i, 2)}"
+                          th:value="${month}"
+                        >
+                          [[${month}]]
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="control">
+                    <div class="select">
+                      <select name="expiringYear">
+                        <option value="">年</option>
+                        <option
+                          th:each="i : ${#numbers.sequence(19, 29)}"
+                          th:with="year = ${#numbers.formatInteger(i, 2)}"
+                          th:value="${year}"
+                        >
+                          [[${year}]]
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label"></div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control is-pulled-right">
+                    <button type="submit" class="button is-primary">
+                      次へ
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <th:block th:insert="fragment/footer"></th:block>
+  </body>
+</html>

@@ -3,6 +3,7 @@ package com.github.kazuma1989.sbms.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,15 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     public void create(OrderEntity order) {
+        order.setCreatedAt(new Date());
+
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc
             .update(
                 "INSERT INTO order_ticket (created_at, total_price, card_name, card_number, card_expiration)"
-                    + " VALUES (CURRENT_DATE, :total_price, :card_name, :card_number, :card_expiration)",
+                    + " VALUES (:created_at, :total_price, :card_name, :card_number, :card_expiration)",
                 new MapSqlParameterSource()
+                    .addValue("created_at", order.getCreatedAt())
                     .addValue("total_price", order.getTotalPrice())
                     .addValue("card_name", order.getCardName())
                     .addValue("card_number", order.getCardNumber())
@@ -40,6 +44,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 
         int orderId = keyHolder.getKey().intValue();
         order.setId(orderId);
+
         order.getItemList().forEach(item -> {
             jdbc
                 .update(

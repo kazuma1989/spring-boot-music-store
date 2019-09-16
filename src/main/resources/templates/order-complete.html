@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+  <head>
+    <th:block th:insert="fragment/head"></th:block>
+  </head>
+
+  <body>
+    <th:block th:insert="fragment/menu"></th:block>
+
+    <section class="section">
+      <div class="container">
+        <h1 class="title is-size-4 has-text-weight-light">
+          注文完了
+        </h1>
+
+        <!--/* <th:block th:insert="fragment/errorMessage"></th:block> */-->
+
+        <th:block th:unless="${error}">
+          <div class="columns">
+            <div class="column is-half is-offset-one-quarter">
+              <article class="message is-success">
+                <div class="message-header">注文手続きが完了しました</div>
+                <div class="message-body content">
+                  <table>
+                    <tr>
+                      <th>注文受付番号</th>
+                      <td>[[${orderId}]]</td>
+                    </tr>
+                    <tr>
+                      <th>注文受付日時</th>
+                      <td>[[${createdAt}]]</td>
+                    </tr>
+                  </table>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="content">
+            <p>
+              お買い上げありがとうございました。
+            </p>
+            <p>
+              お問い合わせの際には、注文受付番号等が必要となりますので、上記の情報をお控えください。<br />
+              またのご利用をお待ちしております。
+            </p>
+          </div>
+        </th:block>
+      </div>
+    </section>
+
+    <th:block th:insert="fragment/footer"></th:block>
+  </body>
+</html>

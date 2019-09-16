@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+  <head>
+    <th:block th:insert="fragment/head"></th:block>
+  </head>
+
+  <body>
+    <th:block th:insert="fragment/menu"></th:block>
+
+    <section class="section">
+      <div class="container">
+        <h1 class="title is-size-4 has-text-weight-light">
+          注文手続き
+        </h1>
+
+        <form class="columns" method="POST" th:action="@{/order/complete}">
+          <div class="column is-one-third">
+            <div class="card">
+              <div class="card-content">
+                <table class="table is-narrow is-fullwidth">
+                  <tbody class="is-size-7">
+                    <tr>
+                      <th style="border: none">商品の合計（税込）</th>
+                      <td class="has-text-right" style="border: none">
+                        ¥ [[${#numbers.formatDecimal(totalPrice, 3, 'COMMA', 0,
+                        'POINT')}]]
+                      </td>
+                    </tr>
+                  </tbody>
+
+                  <tfoot>
+                    <tr>
+                      <th class="has-text-danger">請求金額（税込）</th>
+                      <td
+                        class="has-text-right has-text-danger has-text-weight-bold"
+                      >
+                        ¥ [[${#numbers.formatDecimal(totalPrice, 3, 'COMMA', 0,
+                        'POINT')}]]
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+
+                <button class="button is-fullwidth is-primary" type="submit">
+                  確定
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <div class="label">宛名</div>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <div class="input is-static">
+                      [[${cardName}]]
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">カード番号</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <div
+                      type="text"
+                      class="input is-static"
+                      th:with="card = ${cardNumber}, month = ${expiringMonth}, year = ${expiringYear}"
+                    >
+                      **** **** **** [[${card.substring(card.length() - 4)}]]
+                      ([[${month}]]/[[${year}]])
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <input type="hidden" name="cardName" th:value="${cardName}" />
+          <input type="hidden" name="cardNumber" th:value="${cardNumber}" />
+          <input
+            type="hidden"
+            name="expiringMonth"
+            th:value="${expiringMonth}"
+          />
+          <input type="hidden" name="expiringYear" th:value="${expiringYear}" />
+        </form>
+      </div>
+    </section>
+
+    <th:block th:insert="fragment/footer"></th:block>
+  </body>
+</html>
