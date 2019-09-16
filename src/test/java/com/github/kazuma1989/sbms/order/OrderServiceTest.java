@@ -17,6 +17,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -59,8 +60,17 @@ public class OrderServiceTest {
             return e;
         }));
 
-        assertThat(jdbc.query("SELECT COUNT(*) FROM order_ticket", (rs, rowNum) -> rs.getInt(1)), is(1));
-        assertThat(jdbc.query("SELECT COUNT(*) FROM order_detail", (rs, rowNum) -> rs.getInt(1)), is(2));
+        assertThat(jdbc.query("SELECT COUNT(*) FROM order_ticket", (rs, rowNum) -> rs.getInt(1)).get(0), is(1));
+
+        Integer orderId = jdbc.query("SELECT id FROM order_ticket", (rs, rowNum) -> rs.getInt("id")).get(0);
+        assertThat(
+            jdbc
+                .query(
+                    "SELECT COUNT(*) FROM order_detail WHERE order_id = :order_id",
+                    new MapSqlParameterSource().addValue("order_id", orderId),
+                    (rs, rowNum) -> rs.getInt(1))
+                .get(0),
+            is(2));
     }
 
     static <T> T supply(Supplier<T> supplier) {

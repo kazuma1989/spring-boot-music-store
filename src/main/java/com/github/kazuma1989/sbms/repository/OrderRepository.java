@@ -7,5 +7,5 @@ public interface OrderRepository {
 
     public Optional<ItemEntity> findById(String id);
 
-    public int create(OrderEntity order);
+    public void create(OrderEntity order);
 }

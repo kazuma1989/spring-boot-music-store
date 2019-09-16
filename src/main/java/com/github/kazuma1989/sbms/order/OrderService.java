@@ -16,6 +16,7 @@ public class OrderService {
     OrderRepository repo;
 
     public void order(OrderEntity order) {
-
+        // TODO validation
+        repo.create(order);
     }
 }
