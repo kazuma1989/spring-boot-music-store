@@ -1,28 +1,28 @@
 
-package com.github.kazuma1989.sbms.index;
+package com.github.kazuma1989.sbms.item;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.Optional;
 
 import com.github.kazuma1989.sbms.repository.ItemEntity;
 import com.github.kazuma1989.sbms.repository.ItemRepository;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class IndexService {
-
-    static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+public class ItemService {
 
     @Autowired
     ItemRepository repo;
 
     public List<ItemEntity> findNewItems() {
         return repo.findNewItems();
+    }
+
+    public Optional<ItemEntity> findById(String id) {
+        return repo.findById(Integer.parseInt(id));
     }
 }

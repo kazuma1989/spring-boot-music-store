@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+  <head>
+    <th:block th:insert="fragment/head"></th:block>
+  </head>
+
+  <body>
+    <th:block th:insert="fragment/menu"></th:block>
+
+    <section class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-half">
+            <figure class="image is-square">
+              <img th:src="@{${item.jacketImg}}" />
+            </figure>
+          </div>
+
+          <form class="column is-half" method="POST" th:action="@{/cart/add}">
+            <h1 class="title has-text-weight-light">
+              [[${item.title}]]
+            </h1>
+            <p class="subtitle has-text-weight-bold">
+              [[${item.artistTitle}]]
+            </p>
+
+            <p style="margin-bottom: 1rem">
+              <button class="button is-fullwidth is-primary" type="submit">
+                <span>
+                  カートに入れる
+                </span>
+                <strong>
+                  ¥ [[${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}]]
+                </strong>
+              </button>
+
+              <input type="hidden" name="itemId" th:value="${item.id}" />
+            </p>
+
+            <table class="table is-narrow is-striped">
+              <tr>
+                <th>ジャンル</th>
+                <td>[[${item.genreTitle}]]</td>
+              </tr>
+              <tr>
+                <th>発売日</th>
+                <td>[[${item.releaseDate}]]</td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <th:block th:insert="fragment/footer"></th:block>
+  </body>
+</html>
