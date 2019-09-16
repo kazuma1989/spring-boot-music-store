@@ -28,6 +28,7 @@ public class CartService {
             .stream()
             .filter(c -> c.getItem().getId().toString().equals(id))
             .findFirst();
+
         if (cartItem.isPresent()) {
             CartItemVO v = cartItem.get();
             v.setAmount(v.getAmount() + 1);
