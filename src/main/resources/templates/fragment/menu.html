@@ -30,9 +30,9 @@
         </span>
         <span
           class="tag is-rounded has-text-weight-bold"
-          th:if="${@cartSession.cartCount ge 0}"
+          th:if="${@cartSession.cartList?.size() ge 0}"
         >
-          [[${@cartSession.cartCount}]]
+          [[${@cartSession.cartList?.size()}]]
         </span>
       </a>
     </div>
@@ -105,9 +105,9 @@
           </span>
           <span
             class="tag is-rounded has-text-weight-bold"
-            th:if="${@cartSession.cartCount ge 0}"
+            th:if="${@cartSession.cartList?.size() ge 0}"
           >
-            [[${@cartSession.cartCount}]]
+            [[${@cartSession.cartList?.size()}]]
           </span>
         </a>
       </div>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+  <head>
+    <th:block th:insert="fragment/head"></th:block>
+  </head>
+
+  <body>
+    <th:block th:insert="fragment/menu"></th:block>
+
+    <section class="section">
+      <div class="container">
+        <h1 class="title is-size-4 has-text-weight-light">
+          ショッピングカート
+        </h1>
+
+        <!--/* <th:block th:insert="fragment/errorMessage"></th:block> */-->
+
+        <div
+          class="message is-info"
+          th:unless="${@cartSession.cartList?.size()}"
+        >
+          <div class="message-body">
+            カートに商品がありません。
+          </div>
+        </div>
+
+        <form
+          id="cart"
+          th:if="${@cartSession.cartList?.size()}"
+          th:action="@{/cart/update}"
+          method="POST"
+        >
+          <div class="media is-size-7">
+            <div class="media-content"></div>
+            <div class="media-right">価格（税込）</div>
+          </div>
+
+          <div class="media" th:each="cart : ${@cartSession.cartList}">
+            <figure class="media-left">
+              <a
+                class="image is-128x128"
+                th:href="@{/goods/detail/{id}(id=${cart.catalogNo})}"
+              >
+                <img th:src="@{${cart.jacketFilePath}}" />
+              </a>
+            </figure>
+
+            <div class="media-content">
+              <p class="title is-size-4 has-text-weight-normal">
+                <a th:href="@{/goods/detail/{id}(id=${cart.catalogNo})}">
+                  [[${cart.title}]]
+                </a>
+                <span class="is-size-6">
+                  [[${cart.artistName}]]
+                </span>
+              </p>
+
+              <nav class="level is-mobile">
+                <div class="level-left">
+                  <div class="level-item">
+                    <div class="control">
+                      <div class="select is-small">
+                        <select
+                          name="quantity"
+                          onchange="document.forms.cart.submit()"
+                        >
+                          <option
+                            th:each="j : ${#numbers.sequence(1, 9)}"
+                            th:selected="${cart.quantity == #strings.toString(j)}"
+                            th:value="${j}"
+                          >
+                            個数: [[${j}]]
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="level-item">
+                    <label
+                      class="button is-text is-small"
+                      onclick="document.forms.cart.submit()"
+                    >
+                      <span>削除</span>
+                      <input
+                        class="is-hidden"
+                        type="checkbox"
+                        name="deleteFlag"
+                        th:value="${cart.catalogNo}"
+                      />
+                    </label>
+                  </div>
+                </div>
+              </nav>
+            </div>
+
+            <div class="media-right has-text-right">
+              <th:block th:if="${cart.discountRate}">
+                <p>
+                  <span class="is-size-7">
+                    キャンペーン価格（税込）
+                  </span>
+                  <span class="is-size-5 has-text-weight-bold">
+                    ¥ [[${@stringUtil.moneyFormat(cart.campaignPriceWithTax)}]]
+                  </span>
+                </p>
+                <p class="is-size-5">
+                  <s>¥ [[${@stringUtil.moneyFormat(cart.priceWithTax)}]]</s>
+                </p>
+              </th:block>
+
+              <th:block th:unless="${cart.discountRate}">
+                <p class="is-size-5">
+                  ¥ [[${@stringUtil.moneyFormat(cart.priceWithTax)}]]
+                </p>
+              </th:block>
+            </div>
+          </div>
+
+          <div class="media">
+            <div class="media-content"></div>
+            <div class="media-right"></div>
+          </div>
+
+          <div class="level">
+            <div class="level-left"></div>
+            <div class="level-right">
+              <div class="level-item">
+                <a class="button is-primary" th:href="@{/order/}">
+                  注文手続きへ
+                </a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <th:block th:insert="fragment/footer"></th:block>
+  </body>
+</html>

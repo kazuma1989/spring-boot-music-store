@@ -11,11 +11,5 @@ import org.springframework.web.context.annotation.SessionScope;
 @Component("cartSession")
 public class CartSession {
 
-    /**
-     * Use cartList.size()
-     */
-    @Deprecated(forRemoval = true)
-    public int cartCount = 0;
-
     public List<CartItemVO> cartList = new ArrayList<>();
 }

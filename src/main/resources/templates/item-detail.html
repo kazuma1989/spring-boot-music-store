@@ -16,7 +16,7 @@
             </figure>
           </div>
 
-          <form class="column is-half" method="POST" th:action="@{/cart/add}">
+          <form class="column is-half" method="POST" th:action="@{/cart/}">
             <h1 class="title has-text-weight-light">
               [[${item.title}]]
             </h1>
@@ -30,11 +30,10 @@
                   カートに入れる
                 </span>
                 <strong>
-                  ¥ [[${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}]]
+                  ¥ [[${#numbers.formatDecimal(item.price, 0, 'COMMA', 0,
+                  'POINT')}]]
                 </strong>
               </button>
-
-              <input type="hidden" name="itemId" th:value="${item.id}" />
             </p>
 
             <table class="table is-narrow is-striped">
@@ -47,6 +46,9 @@
                 <td>[[${item.releaseDate}]]</td>
               </tr>
             </table>
+
+            <input type="hidden" name="action" value="add" />
+            <input type="hidden" name="itemId" th:value="${item.id}" />
           </form>
         </div>
       </div>
