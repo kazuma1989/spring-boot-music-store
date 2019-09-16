@@ -39,19 +39,19 @@
             <figure class="media-left">
               <a
                 class="image is-128x128"
-                th:href="@{/goods/detail/{id}(id=${cart.catalogNo})}"
+                th:href="@{/goods/detail/{id}(id=${cart.item.id})}"
               >
-                <img th:src="@{${cart.jacketFilePath}}" />
+                <img th:src="@{${cart.item.jacketImg}}" />
               </a>
             </figure>
 
             <div class="media-content">
               <p class="title is-size-4 has-text-weight-normal">
-                <a th:href="@{/goods/detail/{id}(id=${cart.catalogNo})}">
-                  [[${cart.title}]]
+                <a th:href="@{/goods/detail/{id}(id=${cart.item.id})}">
+                  [[${cart.item.title}]]
                 </a>
                 <span class="is-size-6">
-                  [[${cart.artistName}]]
+                  [[${cart.item.artistTitle}]]
                 </span>
               </p>
 
@@ -66,7 +66,7 @@
                         >
                           <option
                             th:each="j : ${#numbers.sequence(1, 9)}"
-                            th:selected="${cart.quantity == #strings.toString(j)}"
+                            th:selected="${cart.amount == #strings.toString(j)}"
                             th:value="${j}"
                           >
                             個数: [[${j}]]
@@ -86,7 +86,7 @@
                         class="is-hidden"
                         type="checkbox"
                         name="deleteFlag"
-                        th:value="${cart.catalogNo}"
+                        th:value="${cart.item.id}"
                       />
                     </label>
                   </div>
@@ -95,7 +95,7 @@
             </div>
 
             <div class="media-right has-text-right">
-              <th:block th:if="${cart.discountRate}">
+              <!--/* <th:block th:if="${cart.discountRate}">
                 <p>
                   <span class="is-size-7">
                     キャンペーン価格（税込）
@@ -107,13 +107,12 @@
                 <p class="is-size-5">
                   <s>¥ [[${@stringUtil.moneyFormat(cart.priceWithTax)}]]</s>
                 </p>
-              </th:block>
+              </th:block> */-->
 
-              <th:block th:unless="${cart.discountRate}">
-                <p class="is-size-5">
-                  ¥ [[${@stringUtil.moneyFormat(cart.priceWithTax)}]]
-                </p>
-              </th:block>
+              <p class="is-size-5">
+                ¥ [[${#numbers.formatDecimal(cart.item.price, 3, 'COMMA', 0,
+                'POINT')}]]
+              </p>
             </div>
           </div>
 
