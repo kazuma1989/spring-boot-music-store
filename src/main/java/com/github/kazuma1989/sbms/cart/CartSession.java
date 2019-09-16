@@ -8,13 +8,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @SessionScope
 @Component("cartSession")
 public class CartSession {
 
     @Getter
-    @Setter
     private List<CartItemVO> cartList = new ArrayList<>();
 }
